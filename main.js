@@ -10,21 +10,39 @@
   const escHTML = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, c =>
     ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
+  // Pages inside /uslugi/ carry data-uslugi on <body> so root-relative hrefs
+  // coming from shared manifest data (e.g. "uslugi/standart.html") can be
+  // rewritten to same-directory links ("standart.html").
+  const inUslugi = document.body.hasAttribute("data-uslugi");
+  const toHere = (href) => inUslugi ? String(href || "").replace(/^uslugi\//, "") : href;
+
+  // Which two related services to surface in a service page's "next steps" block.
+  const CROSS_MAP = {
+    svcNewsletter: ["svcConsultation", "svcDiploma"],
+    svcConsultation: ["svcDiploma", "svcSpanish"],
+    svcDiploma: ["svcSpanish", "svcTranslations"],
+    svcSpanish: ["svcDiploma", "svcTranslations"],
+    svcTranslations: ["svcDiploma", "svcConsultation"]
+  };
+  const SVC_HREF = {
+    svcNewsletter: "unform.html",
+    svcConsultation: "konsultacia.html",
+    svcDiploma: "standart.html",
+    svcSpanish: "ispanski.html",
+    svcTranslations: "perevody.html"
+  };
+
   function getLang() {
     const stored = localStorage.getItem("esparus_lang");
     if (stored && data.langs && data.langs.includes(stored)) return stored;
     return data.defaultLang || "ru";
   }
 
-  function initials(name) {
-    return name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
-  }
-
   function render(lang) {
     document.documentElement.lang = lang;
-
-    // Nav
     const nav = data.nav && data.nav[lang];
+
+    // Nav (desktop + mobile share the same [data-nav] attributes)
     if (nav) {
       $$("[data-nav]").forEach(el => {
         const key = el.getAttribute("data-nav");
@@ -36,7 +54,7 @@
     const hero = data.hero && data.hero[lang];
     if (hero) {
       $("[data-hero-kicker]") && ($("[data-hero-kicker]").textContent = hero.kicker);
-      $("[data-hero-title]") && ($("[data-hero-title]").innerHTML = hero.title);
+      $("[data-hero-title]") && ($("[data-hero-title]").textContent = hero.title);
       $("[data-hero-sub]") && ($("[data-hero-sub]").textContent = hero.sub);
       $("[data-hero-cta1]") && ($("[data-hero-cta1]").textContent = hero.cta1);
       $("[data-hero-cta2]") && ($("[data-hero-cta2]").textContent = hero.cta2);
@@ -111,7 +129,7 @@
       }
     }
 
-    // Documents checklist
+    // Documents checklist (reused on the homepage and on the diploma service page)
     const documents = data.documents && data.documents[lang];
     if (documents) {
       $("[data-documents-kicker]") && ($("[data-documents-kicker]").textContent = documents.kicker);
@@ -123,20 +141,29 @@
       }
     }
 
-    // Services
-    const services = data.services && data.services[lang];
-    if (services) {
-      $("[data-services-title]") && ($("[data-services-title]").textContent = services.title);
-      const target = $("[data-services-items]");
-      if (target) {
-        target.innerHTML = services.items.map(s => `
-          <article class="card reveal">
+    // Services teaser grid (homepage + services overview page)
+    const servicesSummary = data.servicesSummary && data.servicesSummary[lang];
+    if (servicesSummary) {
+      $("[data-servicessummary-title]") && ($("[data-servicessummary-title]").textContent = servicesSummary.title);
+      $("[data-servicessummary-sub]") && ($("[data-servicessummary-sub]").textContent = servicesSummary.sub);
+      const target = $("[data-servicessummary-items]");
+      if (target && servicesSummary.items) {
+        target.innerHTML = servicesSummary.items.map(s => `
+          <a class="card reveal" href="${escHTML(toHere(s.href))}" style="display:block">
             <h3>${escHTML(s.name)}</h3>
             <span class="service-price">${escHTML(s.price)}</span>
             <p class="lede" style="margin-top:.75rem">${escHTML(s.d)}</p>
-          </article>
+          </a>
         `).join("");
       }
+    }
+
+    // Services overview page header
+    const servicesPage = data.servicesPage && data.servicesPage[lang];
+    if (servicesPage) {
+      $("[data-servicespage-kicker]") && ($("[data-servicespage-kicker]").textContent = servicesPage.kicker);
+      $("[data-servicespage-title]") && ($("[data-servicespage-title]").textContent = servicesPage.title);
+      $("[data-servicespage-sub]") && ($("[data-servicespage-sub]").textContent = servicesPage.sub);
     }
 
     // Myths vs reality
@@ -179,7 +206,7 @@
       $("[data-team-d]") && ($("[data-team-d]").textContent = team.d);
     }
 
-    // CTA
+    // Final CTA
     const cta = data.cta && data.cta[lang];
     if (cta) {
       $("[data-cta-title]") && ($("[data-cta-title]").textContent = cta.title);
@@ -187,11 +214,120 @@
       $("[data-cta-button]") && ($("[data-cta-button]").textContent = cta.button);
     }
 
+    // Contact page
+    const contactPage = data.contactPage && data.contactPage[lang];
+    if (contactPage) {
+      $("[data-contactpage-kicker]") && ($("[data-contactpage-kicker]").textContent = contactPage.kicker);
+      $("[data-contactpage-title]") && ($("[data-contactpage-title]").textContent = contactPage.title);
+      $("[data-contactpage-sub]") && ($("[data-contactpage-sub]").textContent = contactPage.sub);
+      const cardsTarget = $("[data-contactpage-cards]");
+      if (cardsTarget && contactPage.cards) {
+        const c = data.contact || {};
+        cardsTarget.innerHTML = contactPage.cards.map((card, idx) => {
+          const phone = idx === 0 ? c.phone1 : c.phone2;
+          const email = idx === 0 ? c.email1 : c.email2;
+          return `
+            <article class="card contact-card reveal">
+              <h3>${escHTML(card.name)}</h3>
+              <p class="contact-role">${escHTML(card.role)}</p>
+              <div class="contact-links">
+                ${phone ? `<a href="tel:${escHTML(phone)}">${escHTML(phone)}</a>` : ""}
+                ${email ? `<a href="mailto:${escHTML(email)}">${escHTML(email)}</a>` : ""}
+              </div>
+            </article>
+          `;
+        }).join("");
+      }
+      $("[data-contactpage-payment-title]") && ($("[data-contactpage-payment-title]").textContent = contactPage.paymentTitle);
+      const payTarget = $("[data-contactpage-payment]");
+      if (payTarget && contactPage.paymentMethods) {
+        payTarget.innerHTML = contactPage.paymentMethods.map(p => `<span>${escHTML(p)}</span>`).join("");
+      }
+    }
+
+    // Service detail page — <body data-service="svcDiploma"> etc.
+    const svcKey = document.body.getAttribute("data-service");
+    if (svcKey && data[svcKey]) {
+      const svc = data[svcKey][lang];
+      if (svc) {
+        $$("[data-svc-kicker]").forEach(el => { el.textContent = svc.kicker; });
+        $("[data-svc-title]") && ($("[data-svc-title]").textContent = svc.title);
+        $("[data-svc-lede]") && ($("[data-svc-lede]").textContent = svc.lede);
+        $("[data-svc-price-num]") && ($("[data-svc-price-num]").textContent = svc.priceNum);
+        $("[data-svc-price-note]") && ($("[data-svc-price-note]").textContent = svc.priceNote);
+
+        const inc = $("[data-svc-included]");
+        if (inc && svc.included) {
+          inc.innerHTML = svc.included.map(i => `<li class="reveal">${escHTML(i)}</li>`).join("");
+        }
+
+        if (svc.body) { $("[data-svc-body]") && ($("[data-svc-body]").textContent = svc.body); }
+
+        const hiwTitle = $("[data-svc-howitworks-title]");
+        if (svc.howItWorksTitle && hiwTitle) hiwTitle.textContent = svc.howItWorksTitle;
+        const hiw = $("[data-svc-howitworks]");
+        if (hiw && svc.howItWorks) {
+          hiw.innerHTML = svc.howItWorks.map((s, idx) => `
+            <div class="process-step reveal">
+              <span class="step-n">${String(idx + 1).padStart(2, "0")}</span>
+              <div><p class="lede" style="margin-top:0">${escHTML(s)}</p></div>
+            </div>
+          `).join("");
+        }
+
+        if (svc.realisticTitle) { $("[data-svc-realistic-title]") && ($("[data-svc-realistic-title]").textContent = svc.realisticTitle); }
+        if (svc.realistic) { $("[data-svc-realistic]") && ($("[data-svc-realistic]").textContent = svc.realistic); }
+
+        if (svc.paymentTitle) { $("[data-svc-payment-title]") && ($("[data-svc-payment-title]").textContent = svc.paymentTitle); }
+        const pay = $("[data-svc-payment]");
+        if (pay && svc.payment) {
+          pay.innerHTML = svc.payment.map(p => `<span>${escHTML(p)}</span>`).join("");
+        }
+
+        if (svc.contactNote) { $("[data-svc-contact-note]") && ($("[data-svc-contact-note]").textContent = svc.contactNote); }
+
+        if (svc.signupNote) { $("[data-svc-signup-note]") && ($("[data-svc-signup-note]").textContent = svc.signupNote); }
+        const signup = $("[data-svc-signup-link]");
+        if (signup && svc.signupLabel) {
+          signup.textContent = svc.signupLabel;
+          if (svc.signupHref) signup.href = svc.signupHref;
+        }
+
+        if (svc.crossTitle) { $("[data-svc-cross-title]") && ($("[data-svc-cross-title]").textContent = svc.crossTitle); }
+        const crossTarget = $("[data-svc-cross-links]");
+        if (crossTarget) {
+          const related = (CROSS_MAP[svcKey] || []).map(k => {
+            const label = nav && nav[k];
+            const href = SVC_HREF[k];
+            if (!label || !href) return "";
+            return `<a href="${escHTML(href)}">${escHTML(label)}</a>`;
+          }).join("");
+          crossTarget.innerHTML = related;
+        }
+      }
+    }
+
     // Footer
     const footer = data.footer && data.footer[lang];
     if (footer) {
       $("[data-footer-rights]") && ($("[data-footer-rights]").textContent = "Esparus — " + footer.rights);
       $("[data-footer-contact-label]") && ($("[data-footer-contact-label]").textContent = footer.contactLabel);
+      $("[data-footer-resources-label]") && ($("[data-footer-resources-label]").textContent = footer.resourcesLabel);
+      $("[data-footer-social-label]") && ($("[data-footer-social-label]").textContent = footer.socialLabel);
+    }
+    const resources = data.resources && data.resources[lang];
+    const resTarget = $("[data-resources-items]");
+    if (resources && resTarget) {
+      resTarget.innerHTML = resources.map(r => `<li><a href="${escHTML(r.href)}" target="_blank" rel="noopener noreferrer">${escHTML(r.label)}</a></li>`).join("");
+    }
+    const social = data.social;
+    const socialTarget = $("[data-social-block]");
+    if (social && socialTarget && socialTarget.children.length === 0) {
+      socialTarget.innerHTML = `
+        <a href="${escHTML(social.vk)}" target="_blank" rel="noopener noreferrer">VK</a>
+        <a href="${escHTML(social.youtube)}" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="${escHTML(social.blog)}" target="_blank" rel="noopener noreferrer">Blog</a>
+      `;
     }
 
     // Lang switch state
@@ -235,6 +371,23 @@
     window.addEventListener("scroll", () => {
       nav.classList.toggle("is-scrolled", window.scrollY > 12);
     }, { passive: true });
+  }
+
+  function initMobileNav() {
+    const toggle = $(".nav-toggle");
+    const panel = $(".mobile-nav");
+    if (!toggle || !panel || toggle.dataset.mobileNavBound === "1") return;
+    toggle.dataset.mobileNavBound = "1";
+
+    const close = () => { toggle.setAttribute("aria-expanded", "false"); panel.setAttribute("data-open", "false"); };
+    const open = () => { toggle.setAttribute("aria-expanded", "true"); panel.setAttribute("data-open", "true"); };
+
+    toggle.addEventListener("click", () => {
+      const isOpen = toggle.getAttribute("aria-expanded") === "true";
+      isOpen ? close() : open();
+    });
+    $$("a", panel).forEach(a => a.addEventListener("click", close));
+    document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
   }
 
   function initReveals() {
@@ -349,6 +502,7 @@
     safe(() => render(getLang()), "render");
     safe(initLangSwitch, "initLangSwitch");
     safe(initNav, "initNav");
+    safe(initMobileNav, "initMobileNav");
     safe(initCursor, "initCursor");
 
     if (window.gsap && window.ScrollTrigger) {

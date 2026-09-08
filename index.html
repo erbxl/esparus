@@ -11,20 +11,27 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap">
 
   <link rel="stylesheet" href="styles.css?v=20260908">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317233a'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='34' font-weight='600' fill='%23b5842c' text-anchor='middle'%3EE%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="assets/img/logo.webp">
 </head>
 <body>
   <a class="skip-link" href="#main">Перейти к содержимому</a>
 
   <header class="site-nav">
     <div class="container nav-inner">
-      <a href="#" class="brand">Esp<em>arus</em></a>
+      <a href="index.html" class="brand"><img src="assets/img/logo.webp" alt="Esparus" width="158" height="30"></a>
       <nav class="nav-links" aria-label="Основная навигация">
-        <a href="#process" data-nav="process">Процесс</a>
-        <a href="#services" data-nav="services">Услуги</a>
-        <a href="#stories" data-nav="stories">Истории</a>
-        <a href="#team" data-nav="team">Команда</a>
-        <a href="#contact" data-nav="contact">Контакты</a>
+        <a href="index.html" data-nav="home">Главная</a>
+        <div class="has-dropdown">
+          <a href="uslugi/index.html" data-nav="services">Услуги</a>
+          <div class="dropdown-menu">
+            <a href="uslugi/unform.html" data-nav="svcNewsletter">E-mail рассылка</a>
+            <a href="uslugi/konsultacia.html" data-nav="svcConsultation">Личная консультация</a>
+            <a href="uslugi/standart.html" data-nav="svcDiploma">Признать диплом</a>
+            <a href="uslugi/ispanski.html" data-nav="svcSpanish">Испанский язык</a>
+            <a href="uslugi/perevody.html" data-nav="svcTranslations">Переводы на испанский</a>
+          </div>
+        </div>
+        <a href="contact.html" data-nav="contact">Контакты</a>
       </nav>
       <div class="nav-right">
         <div class="lang-switch" role="group" aria-label="Выбор языка">
@@ -32,35 +39,52 @@
           <button type="button" data-lang="en" aria-pressed="false">EN</button>
           <button type="button" data-lang="kz" aria-pressed="false">KZ</button>
         </div>
-        <a href="#contact" class="btn btn-primary nav-cta" data-nav="cta">Оставить заявку</a>
+        <a href="contact.html" class="btn btn-primary nav-cta" data-nav="cta">Оставить заявку</a>
+        <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Открыть меню">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </header>
+
+  <div class="mobile-nav" id="mobile-nav" data-open="false" aria-label="Мобильная навигация">
+    <a href="index.html" data-nav="home">Главная</a>
+    <a href="uslugi/index.html" data-nav="services">Услуги</a>
+    <div class="mobile-sub">
+      <a href="uslugi/unform.html" data-nav="svcNewsletter">E-mail рассылка</a>
+      <a href="uslugi/konsultacia.html" data-nav="svcConsultation">Личная консультация</a>
+      <a href="uslugi/standart.html" data-nav="svcDiploma">Признать диплом</a>
+      <a href="uslugi/ispanski.html" data-nav="svcSpanish">Испанский язык</a>
+      <a href="uslugi/perevody.html" data-nav="svcTranslations">Переводы на испанский</a>
+    </div>
+    <a href="contact.html" data-nav="contact">Контакты</a>
+    <a href="contact.html" class="btn btn-primary" data-nav="cta">Оставить заявку</a>
+  </div>
 
   <main id="main">
     <!-- HERO -->
     <section class="hero">
       <div class="hero-mesh" aria-hidden="true"></div>
       <div class="container hero-inner">
-        <p class="kicker" data-hero-kicker>Гомологация медицинского диплома в Испании</p>
-        <h1 class="hero-title" data-hero-title>Ваш диплом врача.<br><em>Признанный в Испании.</em></h1>
-        <p class="lede" data-hero-sub>С 2006 года мы сопровождаем врачей из России, Украины, Казахстана, Беларуси и других стран СНГ через гомологацию диплома — уже больше 700 признанных случаев.</p>
+        <p class="kicker" data-hero-kicker>Врачом — в Испанию</p>
+        <h1 class="hero-title" data-hero-title>Предлагаем вам переехать врачом в Испанию</h1>
+        <p class="lede" data-hero-sub>Испания — возможно, лучшая страна для работы врачом. С 2006 года мы прошли этот путь больше чем с 700 врачами из России, Украины, Казахстана, Беларуси и других стран СНГ.</p>
         <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary" data-hero-cta1>Составить личный план</a>
-          <a href="#process" class="btn btn-ghost" data-hero-cta2>Узнать процесс</a>
+          <a href="contact.html" class="btn btn-primary" data-hero-cta1>Составить личный план</a>
+          <a href="#process" class="btn btn-ghost" data-hero-cta2>Как это происходит</a>
         </div>
         <div class="hero-trust" data-trust aria-label="Показатели доверия">
           <div>
             <div class="trust-num"><span data-count-to="20">20</span></div>
-            <div class="trust-label">лет опыта — работаем с 2006 года</div>
+            <div class="trust-label">лет опыта — с 2006 года</div>
           </div>
           <div>
             <div class="trust-num"><span data-count-to="700">700</span>+</div>
             <div class="trust-label">признанных дипломов</div>
           </div>
           <div>
-            <div class="trust-num"><span data-count-to="20">20</span></div>
-            <div class="trust-label">лет с одним и тем же присяжным переводчиком</div>
+            <div class="trust-num"><span data-count-to="0">0</span></div>
+            <div class="trust-label">отказов — признание с первого раза</div>
           </div>
         </div>
       </div>
@@ -123,14 +147,15 @@
       </div>
     </section>
 
-    <!-- SERVICES -->
+    <!-- SERVICES TEASER -->
     <section class="section" id="services">
       <div class="container">
         <div class="section-head">
           <p class="kicker">Услуги</p>
-          <h2 data-services-title>Услуги</h2>
+          <h2 data-servicessummary-title>Услуги</h2>
+          <p class="lede" data-servicessummary-sub style="margin-top:.75rem">Каждый шаг можно пройти отдельно — или доверить нам целиком.</p>
         </div>
-        <div class="services-grid" data-services-items></div>
+        <div class="services-grid" data-servicessummary-items></div>
       </div>
     </section>
 
@@ -145,7 +170,7 @@
         <div class="diy-note reveal" data-diy-note>
           <h3 data-diy-title></h3>
           <p data-diy-body></p>
-          <a href="#contact" class="btn btn-ghost" data-diy-cta></a>
+          <a href="contact.html" class="btn btn-ghost" data-diy-cta></a>
         </div>
       </div>
     </section>
@@ -179,7 +204,7 @@
           <h2 data-cta-title>Готовы сделать первый шаг?</h2>
           <p class="lede" data-cta-sub>Бесплатная консультация — без обязательств.</p>
           <div class="hero-actions" style="justify-content:center">
-            <a href="mailto:rauf@esparus.es" class="btn btn-primary" data-cta-button>Записаться на консультацию</a>
+            <a href="contact.html" class="btn btn-primary" data-cta-button>Записаться на консультацию</a>
           </div>
         </div>
       </div>
@@ -189,8 +214,17 @@
   <footer class="site-footer">
     <div class="container footer-grid">
       <div>
+        <img src="assets/img/logo.webp" alt="Esparus" class="footer-logo" width="126" height="24">
         <p data-footer-contact-label style="font-weight:600; color:var(--ink); margin-bottom:.5rem">Контакты</p>
         <div class="footer-contact" data-contact-block style="display:flex; flex-wrap:wrap; gap:1rem"></div>
+      </div>
+      <div>
+        <p data-footer-resources-label style="font-weight:600; color:var(--ink); margin-bottom:.5rem">Полезные ссылки</p>
+        <ul class="resource-list" data-resources-items></ul>
+      </div>
+      <div>
+        <p data-footer-social-label style="font-weight:600; color:var(--ink); margin-bottom:.5rem">Мы также здесь</p>
+        <div class="footer-social" data-social-block></div>
       </div>
       <p data-footer-rights>Esparus — Все права защищены.</p>
     </div>
@@ -202,4 +236,3 @@
   <script defer src="main.js?v=20260908"></script>
 </body>
 </html>
-<!-- redeploy -->
