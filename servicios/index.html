@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Esparus — Услуги</title>
+  <meta name="description" content="Все услуги Esparus: бесплатная email-рассылка, личная консультация, признание медицинского диплома, подготовка к DELE и переводы на испанский.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap">
+
+  <link rel="stylesheet" href="../styles.css?v=20260908c">
+  <link rel="icon" href="../assets/img/logo.webp">
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <header class="site-nav">
+    <div class="container nav-inner">
+      <a href="../index.html" class="brand"><img src="../assets/img/logo.webp" alt="Esparus" width="158" height="30"></a>
+      <nav class="nav-links" aria-label="Основная навигация">
+        <a href="../como-funciona.html" data-nav="howItWorks">Как это происходит</a>
+        <div class="has-dropdown">
+          <a href="index.html" data-nav="services">Услуги</a>
+          <div class="dropdown-menu">
+            <a href="rassylka.html" data-nav="svcNewsletter">E-mail рассылка</a>
+            <a href="consulta.html" data-nav="svcConsultation">Личная консультация</a>
+            <a href="homologacion.html" data-nav="svcDiploma">Признать диплом</a>
+            <a href="espanol.html" data-nav="svcSpanish">Испанский язык</a>
+            <a href="traducciones.html" data-nav="svcTranslations">Переводы на испанский</a>
+          </div>
+        </div>
+        <div class="has-dropdown">
+          <a href="../recursos/index.html" data-nav="resources">Ресурсы</a>
+          <div class="dropdown-menu">
+            <a href="../recursos/documentacion.html" data-nav="resDocumentacion">Документы и ссылки</a>
+            <a href="../recursos/trabajar-en-espana.html" data-nav="resTrabajo">Как найти работу</a>
+            <a href="../recursos/mir.html" data-nav="resMir">Резидентура MIR</a>
+            <a href="../recursos/dentistas.html" data-nav="resDentistas">Стоматологам</a>
+            <a href="../recursos/especialidades.html" data-nav="resEspecialidades">Признание специальности</a>
+            <a href="../recursos/espanol-dele.html" data-nav="resEspanol">Испанский и DELE</a>
+            <a href="../recursos/residencia.html" data-nav="resResidencia">Виза и ВНЖ</a>
+          </div>
+        </div>
+        <a href="../sobre-nosotros.html" data-nav="about">О нас</a>
+        <a href="../faq.html" data-nav="faq">Вопросы</a>
+      </nav>
+      <div class="nav-right">
+        <div class="lang-switch" role="group" aria-label="Выбор языка">
+          <button type="button" data-lang="ru" aria-pressed="true">RU</button>
+          <button type="button" data-lang="en" aria-pressed="false">EN</button>
+          <button type="button" data-lang="kz" aria-pressed="false">KZ</button>
+        </div>
+        <a href="../contact.html" class="btn btn-primary nav-cta" data-nav="cta">Оставить заявку</a>
+        <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Открыть меню">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-nav" id="mobile-nav" data-open="false" aria-label="Мобильная навигация">
+    <a href="../index.html" data-nav="home">Главная</a>
+    <a href="../como-funciona.html" data-nav="howItWorks">Как это происходит</a>
+    <a href="index.html" data-nav="services">Услуги</a>
+    <div class="mobile-sub">
+      <a href="rassylka.html" data-nav="svcNewsletter">E-mail рассылка</a>
+      <a href="consulta.html" data-nav="svcConsultation">Личная консультация</a>
+      <a href="homologacion.html" data-nav="svcDiploma">Признать диплом</a>
+      <a href="espanol.html" data-nav="svcSpanish">Испанский язык</a>
+      <a href="traducciones.html" data-nav="svcTranslations">Переводы на испанский</a>
+    </div>
+    <a href="../recursos/index.html" data-nav="resources">Ресурсы</a>
+    <div class="mobile-sub">
+      <a href="../recursos/documentacion.html" data-nav="resDocumentacion">Документы и ссылки</a>
+      <a href="../recursos/trabajar-en-espana.html" data-nav="resTrabajo">Как найти работу</a>
+      <a href="../recursos/mir.html" data-nav="resMir">Резидентура MIR</a>
+      <a href="../recursos/dentistas.html" data-nav="resDentistas">Стоматологам</a>
+      <a href="../recursos/especialidades.html" data-nav="resEspecialidades">Признание специальности</a>
+      <a href="../recursos/espanol-dele.html" data-nav="resEspanol">Испанский и DELE</a>
+      <a href="../recursos/residencia.html" data-nav="resResidencia">Виза и ВНЖ</a>
+    </div>
+    <a href="../sobre-nosotros.html" data-nav="about">О нас</a>
+    <a href="../faq.html" data-nav="faq">Вопросы</a>
+    <a href="../contact.html" data-nav="contact">Контакты</a>
+    <a href="../contact.html" class="btn btn-primary" data-nav="cta">Оставить заявку</a>
+  </div>
+
+  <main id="main">
+    <section class="page-header">
+      <div class="container">
+        <p class="breadcrumb"><a href="../index.html" data-nav="home">Главная</a> / <span data-nav="services">Услуги</span></p>
+        <p class="kicker" data-servicespage-kicker>Услуги</p>
+        <h1 data-servicespage-title>Как мы можем помочь</h1>
+        <p class="lede" data-servicespage-sub>От бесплатной рассылки до полного сопровождения гомологации — выбирайте то, что нужно именно сейчас.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:1rem">
+      <div class="container">
+        <div class="compare-table" data-servicescompare-items></div>
+      </div>
+    </section>
+
+    <section class="section" style="background:var(--bg-2)">
+      <div class="container">
+        <div class="final-cta reveal">
+          <h2 data-cta-title>Готовы сделать первый шаг?</h2>
+          <p class="lede" data-cta-sub>Бесплатная консультация — без обязательств.</p>
+          <div class="hero-actions" style="justify-content:center">
+            <a href="../contact.html" class="btn btn-primary" data-cta-button>Записаться на консультацию</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <img src="../assets/img/logo.webp" alt="Esparus" class="footer-logo" width="126" height="24">
+        <p data-footer-about style="max-width:32ch">Помогаем врачам из-за рубежа готовить профессиональный путь в Испании.</p>
+      </div>
+      <div>
+        <p class="footer-col-title" data-footer-services-label>Услуги</p>
+        <ul class="footer-links">
+          <li><a href="consulta.html" data-nav="svcConsultation">Личная консультация</a></li>
+          <li><a href="homologacion.html" data-nav="svcDiploma">Признать диплом</a></li>
+          <li><a href="traducciones.html" data-nav="svcTranslations">Переводы на испанский</a></li>
+          <li><a href="espanol.html" data-nav="svcSpanish">Испанский язык</a></li>
+          <li><a href="rassylka.html" data-nav="svcNewsletter">E-mail рассылка</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title" data-footer-resources-label>Ресурсы</p>
+        <ul class="footer-links">
+          <li><a href="../recursos/index.html" data-nav="resources">Все материалы</a></li>
+          <li><a href="../recursos/trabajar-en-espana.html" data-nav="resTrabajo">Как найти работу</a></li>
+          <li><a href="../recursos/mir.html" data-nav="resMir">Резидентура MIR</a></li>
+          <li><a href="../recursos/dentistas.html" data-nav="resDentistas">Стоматологам</a></li>
+          <li><a href="../faq.html" data-nav="faq">Вопросы</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title" data-footer-contact-label>Контакты</p>
+        <div class="footer-contact" data-contact-block></div>
+        <p class="footer-col-title" data-footer-social-label style="margin-top:1.5rem">Мы также здесь</p>
+        <div class="footer-social" data-social-block></div>
+      </div>
+      <div class="footer-bottom">
+        <p data-footer-rights>Esparus — Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script defer src="../lib/gsap.min.js"></script>
+  <script defer src="../lib/ScrollTrigger.min.js"></script>
+  <script defer src="../lib/manifest.js"></script>
+  <script defer src="../main.js?v=20260908c"></script>
+</body>
+</html>
